@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="90ef7871-c877-4f17-9b3d-dd0cba97e964" name="Changes" comment="">
+    <list default="true" id="90ef7871-c877-4f17-9b3d-dd0cba97e964" name="Changes" comment="debezium">
       <change afterPath="$PROJECT_DIR$/.idea/debezium.iml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
@@ -26,6 +26,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "git@github.com:inashahalov/debezium.git",
+    "accountId": "cc416964-9168-4db4-a341-b12b7c749923"
+  }
+}]]></component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 0
 }]]></component>
@@ -161,6 +167,15 @@
       <option name="presentableId" value="Default" />
       <updated>1752047826123</updated>
     </task>
+    <task id="LOCAL-00001" summary="debezium">
+      <option name="closed" value="true" />
+      <created>1752052532925</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1752052532925</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -173,5 +188,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="debezium" />
+    <option name="LAST_COMMIT_MESSAGE" value="debezium" />
   </component>
 </project>
