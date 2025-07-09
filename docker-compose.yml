@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:29092,INTERNAL://kafka:9092
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:29092,INTERNAL://0.0.0.0:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,INTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+
+  postgres:
+    image: debezium/postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: source_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    command: ["postgres", "-c", "wal_level=logical", "-c", "max_replication_slots=10", "-c", "max_wal_senders=10"]
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    environment:
+      CLICKHOUSE_DB: default
+      CLICKHOUSE_USER: default
+      CLICKHOUSE_PASSWORD: clickhousepass
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+
+  connect:
+    image: debezium/connect:2.5
+    ports:
+      - "8083:8083"
+    depends_on:
+      - kafka
+      - postgres
+    environment:
+      BOOTSTRAP_SERVERS: kafka:9092
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: my_connect_configs
+      OFFSET_STORAGE_TOPIC: my_connect_offsets
+      STATUS_STORAGE_TOPIC: my_connect_statuses
+      CONNECT_REST_ADVERTISED_HOST_NAME: connect
+      CONNECT_REST_PORT: 8083
+      CONNECT_BOOTSTRAP_SERVERS: kafka:9092
+      CONNECT_GROUP_ID: 1
+      CONNECT_CONFIG_STORAGE_TOPIC: my_connect_configs
+      CONNECT_OFFSET_STORAGE_TOPIC: my_connect_offsets
+      CONNECT_STATUS_STORAGE_TOPIC: my_connect_statuses
+      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE: "false"
+      CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
+      CONNECT_PLUGIN_PATH: /kafka/connect
+      CONNECT_DATABASE_HISTORY: io.debezium.relational.history.FileDatabaseHistory
