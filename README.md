@@ -23,9 +23,7 @@
 ## Архитектура системы
 
 ```
-+-------------+
-| PostgreSQL  | ——(CDC)——> [Debezium] ——(Kafka)——> [Python Consumer] ——(HTTP)——> [ClickHouse]
-+-------------+
+![img_1.png](img_1.png)
 ```
 
 - **PostgreSQL** — источник данных с включённой логической репликацией.
