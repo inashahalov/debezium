@@ -23,7 +23,8 @@
 ## Архитектура системы
 
 ```
-![img_1.png](img_1.png)
+<img width="278" height="345" alt="image" src="https://github.com/user-attachments/assets/14eb9f0d-4f1c-4407-828d-856eaab410d9" />
+
 ```
 
 - **PostgreSQL** — источник данных с включённой логической репликацией.
